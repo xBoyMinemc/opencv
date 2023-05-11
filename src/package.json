@@ -1,0 +1,12 @@
+{
+  "name": "opencv",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "opencv on web,try to use clipboard between different devices and different user,it is open for everyone.so,it named by me and called opencv. :)",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "xBoyMinemc",
+  "license": "GPL-2.0"
+}
