@@ -1,9 +1,16 @@
 import { createServer } from 'http'
 import log4ym from './log4ym.js'
-const dataBase = new Map()
+import { readFileSync } from 'fs'
+
 console.time("开启耗时")
+const startTime = new String(new Date().toLocaleString()) 
 
+const face = readFileSync('../face/index.html')
+const dataBase = new Map()
+      dataBase.set( '云梦','xBoy Minemc')
+      dataBase.set( 'yume','xBoy Minemc')
 
+let times = 0
 createServer((request, response) => {
     const url = decodeURI(request.url)
     log4ym(request)
@@ -14,7 +21,12 @@ createServer((request, response) => {
     
     console.log(url)
     response.setHeader("Content-Type", "text/html;charset=utf8")
-
+    if(url === '/test'){
+        response.write(face)
+        response.write(`<p><label>本次启动于${startTime} 被访问${++times}次 包含${dataBase.size}项目</label></p>  </body> </html>`)
+        return response.end()
+    }
+    
 	let  i = 1
     let s=url[i]
     while(s=url[++i]){
@@ -38,7 +50,8 @@ createServer((request, response) => {
 
         dataBase.has(key)
         ?
-        response.write('读成功\u000a\u000a'+key+'\u000a\u000a'+dataBase.get(key))
+        response.write(dataBase.get(key))
+        // response.write('读成功\u000a\u000a'+key+'\u000a\u000a'+dataBase.get(key))
         :
         response.write('不存在这种东西')
 
