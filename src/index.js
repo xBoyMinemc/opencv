@@ -21,7 +21,7 @@ createServer((request, response) => {
     
     console.log(url)
     response.setHeader("Content-Type", "text/html;charset=utf8")
-    if(url === '/test'){
+    if(url === '/'){
         response.write(face)
         response.write(`<p><label>本次启动于${startTime} 被访问${++times}次 包含${dataBase.size}项目</label></p>  </body> </html>`)
         return response.end()
