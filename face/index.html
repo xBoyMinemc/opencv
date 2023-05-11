@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>██云梦 Js-Addon██</title>
+  <!-- HTML -->
+  <!-- Custom Styles -->
+  <!-- <link rel="stylesheet" href="style.css" > -->
+</head>
+
+<body style='font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;'>
+  <form name="myform">
+    <p>██ 云梦 openCV ██</p>
+    <p1>云剪切板</p1> <br />
+    <!-- 文本域:大号文本框 -->
+    <p><label for="orgJson">注记词</label></p> 
+    <textarea  style="width:90%;height:300px" id="orgJson" type=json></textarea> <br />
+    
+    <input type="button" name="button" value="清除█" onclick="clearOrg()" /> 
+    <input type="button" name="button" value="人话变鬼话" onclick="xjson()" />  
+    <input type="button" name="button" value="鬼话变人话" onclick="yjson()" /> 
+    <input type="button" name="button" value="█复制鬼话" onclick="copyEndJson()" /> 
+    <input type="button" name="button" value="█复制人话" onclick="copyOrgJson()" /> <br />
+
+    <p><label for="orgJson">处理结果(这里出现结果)</label></p> 
+    <textarea  style="width:90%;height:300px" id="endJson" type=json></textarea> <br />
+
+    <!-- <p><label for="orgJson">回转回头再说,说实话鸽了八个月是够让我意外的</label></p> -->
+    <!-- 记，忆一位故时友人 -->
+    <!-- Project -->
+  </form>
+  <script>
+  function clearOrg() { let v = document.getElementById("orgJson").value = "" }
+
+  function clearEnd() { let v = document.getElementById("endJson").value = "" }
+
+function copyOrgJson() {
+  var t = document.getElementById("orgJson");
+  
+  if(!t.value.trim().length){
+  alert("姐姐，上面空的呀。")
+  return
+  }
+  t.select();
+  document.execCommand("Copy");
+  alert("复制成功");
+}
+  function copyEndJson() {
+  var t = document.getElementById("endJson");
+  
+  if(!t.value.trim().length){
+  alert("姐姐，下面是空的。")
+  return
+  }
+  t.select();
+  document.execCommand("Copy");
+  alert("复制成功");
+}
+
+function xjson() {
+  var orgJson = myform.orgJson.value
+  if(!orgJson.trim().length){
+  alert("姐姐，上面空的呀。")
+  return
+  }
+  console.log(orgJson)
+  const writer = '云梦梦梦子'
+  const xWords = [
+      'false','true'
+    ]
+  let xxWords = []
+  function tra(cha) {
+    if (!(/[A-Z]/i.test(cha) || /[0-9]/.test(cha) || /[^\x00-\xff]/.test(cha)))return cha;
+    //      AZ                  09                          呵呵[^\x00-\xff]      [\u4e00-\u9fa5]
+      cha = cha.charCodeAt(0).toString(16); for (; cha.length < 4; cha = "0" + cha);
+        return "\\u" + cha}
+  function tra2(words){  return words.split('').map(tra).join('')  }
+  for(let i in xWords)xxWords.push(tra2(xWords[i]))
+  function xReplaceAll(text){
+  for(let i in xWords)text=text.replaceAll(xxWords[i],xWords[i])
+  return text
+  }
+
+  orgJson = xReplaceAll(tra2(orgJson));
+  console.log('###',unescape(orgJson.replace(/\\u/gi,'%u')))
+  document.getElementById("endJson").value = orgJson;
+}
+function yjson() {
+  var endJson = myform.endJson.value
+  if(!endJson.trim().length){
+  alert("姐姐啊，下面是空的呀。")
+  return
+  }
+      endJson = unescape(endJson.replace(/\\u/gi,'%u'))
+  console.log('###',endJson)
+  document.getElementById("orgJson").value = endJson;
+}
+  </script>
+</body>
