@@ -8,7 +8,6 @@
   <title>██云梦 Js-Addon██</title>
   <!-- HTML -->
   <!-- Custom Styles -->
-  <!-- <link rel="stylesheet" href="style.css" > -->
 </head>
 
 <body style='font-family: miranafont,"Hiragino Sans GB",STXihei,"Microsoft YaHei",SimSun,sans-serif;'>
@@ -29,6 +28,7 @@
     <textarea  style="width:90%;height:300px" id="endJson" type=json></textarea> <br />
 
     <!-- <p><label for="orgJson">回转回头再说,说实话鸽了八个月是够让我意外的</label></p> -->
+    <!-- 记，忆一位故时友人 -->
     <!-- Project -->
   </form>
   <script>
@@ -65,17 +65,18 @@ function xjson() {
   alert("姐姐，上面空的呀。")
   return
   }
-  console.log(orgJson)
+//   console.log(orgJson)
   const writer = '云梦梦梦子'
-  const xWords = [
-      'false','true'
-    ]
-  let xxWords = []
+//   const xWords = [
+//       'false','true'
+//     ]
+//   let xxWords = []
   function tra(cha) {
     if (!(/[A-Z]/i.test(cha) || /[0-9]/.test(cha) || /[^\x00-\xff]/.test(cha)))return cha;
     //      AZ                  09                          呵呵[^\x00-\xff]      [\u4e00-\u9fa5]
       cha = cha.charCodeAt(0).toString(16); for (; cha.length < 4; cha = "0" + cha);
-        return "\\u" + cha}
+        return "\\u" + cha
+    }
   function tra2(words){  return words.split('').map(tra).join('')  }
   for(let i in xWords)xxWords.push(tra2(xWords[i]))
   function xReplaceAll(text){
@@ -87,6 +88,7 @@ function xjson() {
   console.log('###',unescape(orgJson.replace(/\\u/gi,'%u')))
   document.getElementById("endJson").value = orgJson;
 }
+
 function yjson() {
   var endJson = myform.endJson.value
   if(!endJson.trim().length){
