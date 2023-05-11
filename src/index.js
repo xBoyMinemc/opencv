@@ -1,6 +1,8 @@
 import { createServer } from 'http'
 import log4ym from './log4ym.js'
 const dataBase = new Map()
+console.time("开启耗时")
+
 
 createServer((request, response) => {
     const url = decodeURI(request.url)
@@ -49,5 +51,6 @@ createServer((request, response) => {
 
 
 }).listen(80, () => {
+    console.timeEnd("开启耗时")
     console.log('server is running at 127.0.0.1')
 })
